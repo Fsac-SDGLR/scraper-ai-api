@@ -11,7 +11,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-RUN pip install playwright==@1.50.0 && \
+RUN pip install playwright && \
     playwright install --with-deps
 
 # Make port 8000 available to the world outside this container
