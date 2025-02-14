@@ -30,10 +30,10 @@ RUN apt-get update && apt-get install -y \
     libnspr4 \
     libxss1 \
     xdg-utils \
-    libgstreamer-1.0-0 \
+    libgstreamer1.0-0 \
     libgtk-4-1 \
     libgraphene-1.0-0 \
-    libwoff2dec1 \
+    libwoff1 \
     libvpx7 \
     libopus0 \
     libgstallocators-1.0-0 \
@@ -42,23 +42,7 @@ RUN apt-get update && apt-get install -y \
     libgstpbutils-1.0-0 \
     libgstaudio-1.0-0 \
     libgstgl-1.0-0 \
-    libgsttag-1.0-0 \
-    libgstvideo-1.0-0 \
-    libgstcodecparsers-1.0-0 \
-    libgstfft-1.0-0 \
     libflite1 \
-    libflite_usenglish1 \
-    libflite_cmu_grapheme_lang1 \
-    libflite_cmu_grapheme_lex1 \
-    libflite_cmu_indic_lang1 \
-    libflite_cmu_indic_lex1 \
-    libflite_cmulex1 \
-    libflite_cmu_time_awb1 \
-    libflite_cmu_us_awb1 \
-    libflite_cmu_us_kal161 \
-    libflite_cmu_us_kal1 \
-    libflite_cmu_us_rms1 \
-    libflite_cmu_us_slt1 \
     libavif15 \
     libharfbuzz-icu0 \
     libenchant-2-2 \
