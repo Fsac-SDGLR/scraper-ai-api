@@ -4,4 +4,3 @@ langchain-core
 scrapegraphai
 langchain-groq
 pydantic
-playwright
