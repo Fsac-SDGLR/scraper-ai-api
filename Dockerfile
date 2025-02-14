@@ -7,12 +7,13 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
+RUN pip install playwright && \
+    playwright install --with-deps
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-RUN pip install playwright && \
-    playwright install --with-deps
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
@@ -21,4 +22,4 @@ EXPOSE 8000
 ENV NAME FastAPI_Scraper
 
 # Run app.py when the container launches
-CMD ["python" , "main.py"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
