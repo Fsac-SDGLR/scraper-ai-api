@@ -1,9 +1,12 @@
+import re
 from scrapegraphai.graphs import SmartScraperGraph
 from langchain_groq.chat_models import ChatGroq
 from pydantic import BaseModel, Field
 from typing import List
 from langchain.output_parsers import OutputFixingParser, PydanticOutputParser
 from langchain_core.exceptions import OutputParserException
+
+MAX_TOKEN = 5500
 
 class Event(BaseModel):
     name: str = Field(description="name of event if not available should make NA")
@@ -18,9 +21,11 @@ class ScrapedEvents(BaseModel):
 
 graph_config = {
     "llm": {
-        "model": "groq/llama-3.1-8b-instant",
+        "model": "groq/deepseek-r1-distill-llama-70b",
         "api_key": "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",
-        "temperature": 0
+        "temperature": 0,
+        "model_tokens": MAX_TOKEN,
+        "max_tokens": MAX_TOKEN
     },
     "headless": True,
     "verbose": False,
@@ -59,6 +64,8 @@ def scrape_events(website, user_prompt, keywords):
         schema=ScrapedEvents,
     )
     llm: ChatGroq = smart_scraper_graph.llm_model
+    llm.model_kwargs['max_tokens'] = MAX_TOKEN
+    del llm.model_kwargs['model_tokens']
 
     llm.with_structured_output(schema=ScrapedEvents, method='json_mode', include_raw=True)
     result = ""
@@ -66,7 +73,8 @@ def scrape_events(website, user_prompt, keywords):
         result = smart_scraper_graph.run()
     except OutputParserException as e:
         new_parser = OutputFixingParser.from_llm(parser=PydanticOutputParser(pydantic_object=ScrapedEvents), llm=llm)
-        result = new_parser.parse(e.llm_output)
+        output = re.sub(r"<think>.*?</think>\n?", "", e.llm_output, flags=re.DOTALL)
+        result = new_parser.parse(output)
 
     if result == "":
         return {"events": []}
