@@ -21,7 +21,7 @@ class ScrapedEvents(BaseModel):
 
 graph_config = {
     "llm": {
-        "model": "groq/deepseek-r1-distill-llama-70b",
+        "model": "groq/deepseek-r1-distill-qwen-32b",
         "api_key": "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",
         "temperature": 0,
         "model_tokens": MAX_TOKEN,
